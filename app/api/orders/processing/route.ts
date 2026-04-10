@@ -1,0 +1,15 @@
+import { NextRequest, NextResponse } from "next/server";
+import { fetchOrdersFromAPI } from "@/lib/fetchOrders";
+
+export async function GET(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const page = Number(searchParams.get("page") ?? 1);
+    const limit = Number(searchParams.get("limit") ?? 10);
+    const data = await fetchOrdersFromAPI("processing", page, limit);
+    return NextResponse.json(data);
+  } catch (e: any) {
+    console.error("[API/Orders/Processing] Expected error:", e.message);
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  }
+}
