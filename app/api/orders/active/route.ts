@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   const token = process.env.AUTH_TOKEN;
   if (!token) return NextResponse.json({ error: "AUTH_TOKEN not set" }, { status: 401 });
